@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 668" role="img" aria-label="Rooms and game modes diagram">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .lane-label{font-size:10px;fill:#8A94AD;letter-spacing:2px}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.ctl{stroke:#FF5C8A;stroke-width:1.5;opacity:.85;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.ctl{fill:#FF5C8A}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow2)}
+  .node.ctl{stroke:#FF5C8A}
+  .lane{fill:rgba(19,24,40,.6);stroke:#232D47;stroke-width:1;stroke-dasharray:2 4}
+  .chip{fill:url(#chk2);stroke:#31406A;stroke-width:1}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee2{animation:march2 1.2s linear infinite}
+    @keyframes march2{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <pattern id="chk2" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1A2136"/>
+    <rect width="4" height="4" fill="#2A3452"/>
+    <rect x="4" y="4" width="4" height="4" fill="#2A3452"/>
+  </pattern>
+  <filter id="glow2" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrCtl2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FF5C8A"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1060" height="668" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1059" height="667" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[2/7]</text>
+<text class="ttl" x="84" y="28">ROOMS &amp; GAME MODES — one hub, matches by lobby</text>
+
+<g transform="translate(0,48)">
+  <!-- GameServer -->
+  <g>
+    <rect class="node" x="410" y="24" width="260" height="58"/>
+    <rect class="chip" x="646" y="32" width="14" height="14"/>
+    <text class="n-title" x="424" y="50">GameServer</text>
+    <text class="n-sub" x="424" y="69">connection + session management</text>
+  </g>
+
+  <!-- StagingRoom -->
+  <g>
+    <rect class="node" x="60" y="140" width="300" height="76"/>
+    <rect class="chip" x="336" y="148" width="14" height="14"/>
+    <text class="n-title" x="74" y="166">StagingRoom</text>
+    <text class="n-sub" x="74" y="185">persistent social hub</text>
+    <text class="n-sub" x="74" y="203">position deltas, chat, AFK</text>
+  </g>
+  <!-- LobbyManager -->
+  <g>
+    <rect class="node" x="410" y="150" width="260" height="48"/>
+    <rect class="chip" x="646" y="158" width="14" height="14"/>
+    <text class="n-title" x="424" y="179">LobbyManager</text>
+  </g>
+
+  <!-- ArenaRoom hot -->
+  <g>
+    <rect class="node hot" x="410" y="256" width="260" height="58"/>
+    <rect class="marquee marquee2" x="405" y="251" width="270" height="68"/>
+    <rect class="chip" x="646" y="264" width="14" height="14"/>
+    <text class="n-title" x="424" y="282">ArenaRoom</text>
+    <text class="n-sub" x="424" y="301">competitive · 33 Hz sim</text>
+  </g>
+  <!-- DungeonRoom -->
+  <g>
+    <rect class="node" x="740" y="246" width="290" height="76"/>
+    <rect class="chip" x="1006" y="254" width="14" height="14"/>
+    <text class="n-title" x="754" y="272">DungeonRoom</text>
+    <text class="n-sub" x="754" y="291">co-op PvE · procedural gen</text>
+    <text class="n-sub" x="754" y="309">party bots, bosses, XP</text>
+  </g>
+  <!-- Shared managers -->
+  <g>
+    <rect class="node" x="60" y="246" width="300" height="76"/>
+    <rect class="chip" x="336" y="254" width="14" height="14"/>
+    <text class="n-title" x="74" y="272">Shared managers</text>
+    <text class="n-sub" x="74" y="291">flags, switches, warps,</text>
+    <text class="n-sub" x="74" y="309">turrets, match voting</text>
+  </g>
+
+  <!-- Mode plugins lane -->
+  <rect class="lane" x="60" y="372" width="970" height="222"/>
+  <text class="lane-label" x="76" y="396">MODE PLUGINS — WIN-CONDITION MODULES</text>
+  <g>
+    <rect class="node" x="90" y="416" width="300" height="100"/>
+    <rect class="chip" x="366" y="424" width="14" height="14"/>
+    <text class="n-title" x="104" y="446">Normal (default)</text>
+    <text class="n-sub" x="104" y="467">CTF flags, switch control,</text>
+    <text class="n-sub" x="104" y="485">flag + switch</text>
+  </g>
+  <g>
+    <rect class="node" x="430" y="416" width="250" height="44"/>
+    <text class="n-title" x="444" y="443">Deathmatch</text>
+  </g>
+  <g>
+    <rect class="node" x="430" y="472" width="250" height="44"/>
+    <text class="n-title" x="444" y="499">Free-for-All</text>
+  </g>
+  <g>
+    <rect class="node" x="430" y="528" width="250" height="44"/>
+    <text class="n-title" x="444" y="555">Turret Assassin</text>
+  </g>
+  <g>
+    <rect class="node" x="720" y="416" width="290" height="44"/>
+    <text class="n-title" x="734" y="443">Domination</text>
+  </g>
+  <g>
+    <rect class="node" x="720" y="472" width="290" height="44"/>
+    <text class="n-title" x="734" y="499">Assassin</text>
+  </g>
+
+  <!-- edges -->
+  <path class="edge" d="M470 82 V116 H210 V136" marker-end="url(#arr2)"/>
+  <path class="edge" d="M540 82 V146" marker-end="url(#arr2)"/>
+  <path class="edge" d="M480 198 V252" marker-end="url(#arr2)"/>
+  <path class="edge" d="M600 198 V222 H880 V242" marker-end="url(#arr2)"/>
+
+  <!-- Arena to managers link -->
+  <path class="edge ctl" d="M410 290 H364" marker-end="url(#arrCtl2)"/>
+
+  <!-- Arena to mode plugins -->
+  <path class="edge" d="M470 314 V352 H240 V412" marker-end="url(#arr2)"/>
+  <text class="elabel" x="252" y="345" text-anchor="start">hosts at most one active mode</text>
+</g>
+</svg>

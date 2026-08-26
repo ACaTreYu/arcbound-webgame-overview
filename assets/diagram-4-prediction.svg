@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 660" role="img" aria-label="Prediction and reconciliation sequence diagram">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .lane-label{font-size:10px;fill:#8A94AD;letter-spacing:2px}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.data{stroke:#5FE3D0;stroke-dasharray:5 4;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.data{fill:#5FE3D0}
+  .life{stroke:#31406A;stroke-width:1;stroke-dasharray:3 4}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow4)}
+  .note{fill:#1A2136;stroke:#31406A;stroke-width:1}
+  .chip{fill:url(#chk4);stroke:#31406A;stroke-width:1}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee4{animation:march4 1.2s linear infinite}
+    @keyframes march4{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <pattern id="chk4" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1A2136"/>
+    <rect width="4" height="4" fill="#2A3452"/>
+    <rect x="4" y="4" width="4" height="4" fill="#2A3452"/>
+  </pattern>
+  <filter id="glow4" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrData4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#5FE3D0"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1060" height="660" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1059" height="659" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[4/7]</text>
+<text class="ttl" x="84" y="28">PREDICTION &amp; RECONCILIATION — same code, same result</text>
+
+<g transform="translate(0,48)">
+  <!-- lifelines -->
+  <line class="life" x1="180" y1="96" x2="180" y2="536"/>
+  <line class="life" x1="530" y1="96" x2="530" y2="536"/>
+  <line class="life" x1="880" y1="96" x2="880" y2="536"/>
+
+  <!-- headers -->
+  <g>
+    <rect class="node" x="60" y="30" width="240" height="58"/>
+    <text class="n-title" x="74" y="56">Player input</text>
+    <text class="n-sub" x="74" y="75">keys + cursor</text>
+  </g>
+  <g>
+    <rect class="node hot" x="410" y="30" width="240" height="58"/>
+    <rect class="marquee marquee4" x="405" y="25" width="250" height="68"/>
+    <text class="n-title" x="424" y="56">Client</text>
+    <text class="n-sub" x="424" y="75">predicted sim</text>
+  </g>
+  <g>
+    <rect class="node" x="760" y="30" width="240" height="58"/>
+    <text class="n-title" x="774" y="56">Server</text>
+    <text class="n-sub" x="774" y="75">authoritative sim</text>
+  </g>
+
+  <!-- 1: P -> C -->
+  <path class="edge" d="M182 150 H528" marker-end="url(#arr4)"/>
+  <text class="elabel" x="355" y="142" text-anchor="middle">keys + cursor</text>
+
+  <!-- C self: apply input -->
+  <g>
+    <rect class="node" x="400" y="176" width="260" height="52"/>
+    <text class="n-title" x="414" y="198">apply input immediately</text>
+    <text class="n-sub" x="414" y="217">fixed-timestep shared physics</text>
+  </g>
+
+  <!-- 2: C -> S -->
+  <path class="edge" d="M532 262 H878" marker-end="url(#arr4)"/>
+  <text class="elabel" x="705" y="254" text-anchor="middle">input + sequence number</text>
+
+  <!-- S self: apply same input -->
+  <g>
+    <rect class="node" x="750" y="288" width="260" height="52"/>
+    <text class="n-title" x="764" y="310">apply same input</text>
+    <text class="n-sub" x="764" y="329">in shared physics</text>
+  </g>
+
+  <!-- 3: S -->> C snapshot (data return) -->
+  <path class="edge data" d="M878 400 H532" marker-end="url(#arrData4)"/>
+  <text class="elabel data" x="705" y="392" text-anchor="middle">snapshot (last acked sequence)</text>
+
+  <!-- C self: rewind + replay -->
+  <g>
+    <rect class="node" x="390" y="426" width="280" height="52"/>
+    <text class="n-title" x="404" y="448">rewind to server state</text>
+    <text class="n-sub" x="404" y="467">replay unacked inputs</text>
+  </g>
+
+  <!-- Note over C -->
+  <g>
+    <rect class="note" x="60" y="536" width="940" height="56"/>
+    <text class="lane-label" x="76" y="556">NOTE — CLIENT</text>
+    <text class="n-sub" x="76" y="578" fill="#C6CEDF">correction is invisible when prediction matched — same code, same constants, same result</text>
+  </g>
+</g>
+</svg>

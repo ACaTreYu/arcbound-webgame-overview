@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 588" role="img" aria-label="Netcode stack diagram">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .lane-label{font-size:10px;fill:#8A94AD;letter-spacing:2px}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.data{stroke:#5FE3D0;stroke-dasharray:5 4;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.data{fill:#5FE3D0}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow3)}
+  .node.data{stroke:#5FE3D0}
+  .lane{fill:rgba(19,24,40,.6);stroke:#232D47;stroke-width:1;stroke-dasharray:2 4}
+  .chip{fill:url(#chk3);stroke:#31406A;stroke-width:1}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee3{animation:march3 1.2s linear infinite}
+    @keyframes march3{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <pattern id="chk3" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1A2136"/>
+    <rect width="4" height="4" fill="#2A3452"/>
+    <rect x="4" y="4" width="4" height="4" fill="#2A3452"/>
+  </pattern>
+  <filter id="glow3" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrS3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrData3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#5FE3D0"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1060" height="588" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1059" height="587" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[3/7]</text>
+<text class="ttl" x="84" y="28">NETCODE STACK — UDP-like transport, ARCnet reliability</text>
+
+<g transform="translate(0,48)">
+  <rect class="lane" x="40" y="40" width="440" height="470"/>
+  <text class="lane-label" x="56" y="64">BROWSER CLIENT</text>
+  <rect class="lane" x="580" y="40" width="440" height="470"/>
+  <text class="lane-label" x="596" y="64">NODE SERVER</text>
+
+  <!-- browser nodes -->
+  <g>
+    <rect class="node" x="90" y="86" width="300" height="58"/>
+    <rect class="chip" x="366" y="94" width="14" height="14"/>
+    <text class="n-title" x="104" y="112">Game loop</text>
+    <text class="n-sub" x="104" y="131">predict + render</text>
+  </g>
+  <g>
+    <rect class="node" x="90" y="164" width="300" height="44"/>
+    <rect class="chip" x="366" y="172" width="14" height="14"/>
+    <text class="n-title" x="104" y="191">NetworkClient</text>
+  </g>
+  <g>
+    <rect class="node hot" x="90" y="228" width="300" height="44"/>
+    <rect class="marquee marquee3" x="85" y="223" width="310" height="54"/>
+    <text class="n-title" x="104" y="255">ARCnet session</text>
+  </g>
+  <g>
+    <rect class="node data" x="90" y="322" width="300" height="58"/>
+    <rect class="chip" x="366" y="330" width="14" height="14"/>
+    <text class="n-title" x="104" y="348">WebRTC DataChannels</text>
+    <text class="n-sub" x="104" y="367">state / input</text>
+  </g>
+  <g>
+    <rect class="node" x="90" y="404" width="300" height="58"/>
+    <rect class="chip" x="366" y="412" width="14" height="14"/>
+    <text class="n-title" x="104" y="430">WebSocket</text>
+    <text class="n-sub" x="104" y="449">signaling + fallback</text>
+  </g>
+
+  <!-- node server nodes -->
+  <g>
+    <rect class="node" x="630" y="86" width="300" height="58"/>
+    <rect class="chip" x="906" y="94" width="14" height="14"/>
+    <text class="n-title" x="644" y="112">Room simulation</text>
+    <text class="n-sub" x="644" y="131">33 Hz authoritative tick</text>
+  </g>
+  <g>
+    <rect class="node hot" x="630" y="228" width="300" height="44"/>
+    <text class="n-title" x="644" y="255">ARCnet session</text>
+  </g>
+  <g>
+    <rect class="node data" x="630" y="322" width="300" height="44"/>
+    <rect class="chip" x="906" y="330" width="14" height="14"/>
+    <text class="n-title" x="644" y="349">WebRTC signaling</text>
+  </g>
+  <g>
+    <rect class="node" x="630" y="404" width="300" height="44"/>
+    <rect class="chip" x="906" y="412" width="14" height="14"/>
+    <text class="n-title" x="644" y="431">WebSocket server</text>
+  </g>
+
+  <!-- intra-browser chain -->
+  <path class="edge" d="M240 144 V162" marker-end="url(#arr3)"/>
+  <path class="edge" d="M240 208 V226" marker-end="url(#arr3)"/>
+  <path class="edge" d="M180 272 V300 H200 V320" marker-end="url(#arr3)"/>
+  <path class="edge" d="M300 272 V300 H320 V402" marker-end="url(#arr3)"/>
+
+  <!-- signaling to server session -->
+  <path class="edge" d="M780 322 V276" marker-end="url(#arr3)"/>
+  <!-- server session to room -->
+  <path class="edge" d="M780 228 V148" marker-end="url(#arr3)"/>
+
+  <!-- cross-lane transport -->
+  <path class="edge" d="M390 344 H628" marker-start="url(#arrS3)" marker-end="url(#arr3)"/>
+  <text class="elabel" x="510" y="336" text-anchor="middle">unordered, unreliable · datagram-style</text>
+
+  <!-- websocket fallback link -->
+  <path class="edge" d="M390 426 H628" marker-start="url(#arrS3)" marker-end="url(#arr3)"/>
+  <text class="elabel" x="510" y="418" text-anchor="middle">signaling + fallback</text>
+</g>
+</svg>

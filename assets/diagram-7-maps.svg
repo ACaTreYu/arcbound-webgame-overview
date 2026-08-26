@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 540" role="img" aria-label="Map pipeline and editor integration diagram">
+<style>
+  text{font-family:Consolas,Menlo,'DejaVu Sans Mono',monospace;fill:#E8ECF5}
+  .ttl{font-size:15px;font-weight:700;fill:#E8ECF5}
+  .stp{font-size:11px;font-weight:700;fill:#FFB347;letter-spacing:2px}
+  .n-title{font-size:14px;font-weight:700}
+  .n-sub{font-size:11px;fill:#98A2B8}
+  .edge{stroke:#FFB347;stroke-width:2;fill:none}
+  .edge.data{stroke:#5FE3D0;stroke-dasharray:5 4;fill:none}
+  .elabel{font-size:11px;fill:#98A2B8}
+  .elabel.data{fill:#5FE3D0}
+  .node{fill:#0E1322;stroke:#31406A;stroke-width:1}
+  .node.hot{stroke:#FFB347;stroke-width:1.5;filter:url(#glow7)}
+  .node.data{stroke:#5FE3D0}
+  .chip{fill:url(#chk7);stroke:#31406A;stroke-width:1}
+  .marquee{fill:none;stroke:#FFB347;stroke-width:1.5;stroke-dasharray:4 4}
+  @media (prefers-reduced-motion:no-preference){
+    .marquee7{animation:march7 1.2s linear infinite}
+    @keyframes march7{to{stroke-dashoffset:-16}}
+  }
+</style>
+<defs>
+  <pattern id="chk7" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#1A2136"/>
+    <rect width="4" height="4" fill="#2A3452"/>
+    <rect x="4" y="4" width="4" height="4" fill="#2A3452"/>
+  </pattern>
+  <filter id="glow7" x="-30%" y="-30%" width="160%" height="160%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFB347" flood-opacity="0.28"/>
+  </filter>
+  <marker id="arr7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#FFB347"/>
+  </marker>
+  <marker id="arrData7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+    <path d="M0 0 L8 4 L0 8 z" fill="#5FE3D0"/>
+  </marker>
+</defs>
+
+<rect x="0" y="0" width="1060" height="540" fill="#121828"/>
+<rect x="0.5" y="0.5" width="1059" height="539" fill="none" stroke="#232D47"/>
+
+<text class="stp" x="20" y="28">[7/7]</text>
+<text class="ttl" x="84" y="28">MAP PIPELINE — round-trip with the classic format</text>
+
+<g transform="translate(0,48)">
+  <!-- row 1 -->
+  <g>
+    <rect class="node" x="40" y="90" width="230" height="58"/>
+    <rect class="chip" x="246" y="98" width="14" height="14"/>
+    <text class="n-title" x="54" y="116">AC Map Editor</text>
+    <text class="n-sub" x="54" y="135">companion desktop app</text>
+  </g>
+  <g>
+    <rect class="node" x="330" y="90" width="250" height="58"/>
+    <rect class="chip" x="556" y="98" width="14" height="14"/>
+    <text class="n-title" x="344" y="116">Server publishing service</text>
+    <text class="n-sub" x="344" y="135">map upload / stats</text>
+  </g>
+  <g>
+    <rect class="node hot" x="640" y="84" width="280" height="70"/>
+    <rect class="marquee marquee7" x="635" y="79" width="290" height="80"/>
+    <rect class="chip" x="896" y="92" width="14" height="14"/>
+    <text class="n-title" x="654" y="114">ACMapParser / ACMapWriter</text>
+    <text class="n-sub" x="654" y="133">round-trip .map I/O</text>
+  </g>
+
+  <!-- row 2 -->
+  <g>
+    <rect class="node data" x="640" y="230" width="280" height="76"/>
+    <rect class="chip" x="896" y="238" width="14" height="14"/>
+    <text class="n-title" x="654" y="256">Map library</text>
+    <text class="n-sub" x="654" y="277">hundreds of community maps,</text>
+    <text class="n-sub" x="654" y="295">+ studio-authored maps</text>
+  </g>
+
+  <!-- row 3 -->
+  <g>
+    <rect class="node" x="360" y="390" width="300" height="76"/>
+    <rect class="chip" x="636" y="398" width="14" height="14"/>
+    <text class="n-title" x="374" y="416">Rooms</text>
+    <text class="n-sub" x="374" y="437">collision masks, flags,</text>
+    <text class="n-sub" x="374" y="455">switches, warps, mode detection</text>
+  </g>
+  <g>
+    <rect class="node" x="740" y="390" width="280" height="76"/>
+    <rect class="chip" x="996" y="398" width="14" height="14"/>
+    <text class="n-title" x="754" y="416">AI map analysis</text>
+    <text class="n-sub" x="754" y="437">routes, chokepoints, digests</text>
+  </g>
+
+  <!-- edges -->
+  <path class="edge" d="M270 119 H328" marker-end="url(#arr7)"/>
+  <text class="elabel" x="299" y="111" text-anchor="middle">publish</text>
+  <path class="edge" d="M580 119 H638" marker-end="url(#arr7)"/>
+  <path class="edge" d="M780 154 V228" marker-end="url(#arr7)"/>
+
+  <path class="edge" d="M760 306 V350 H510 V388" marker-end="url(#arr7)"/>
+  <path class="edge" d="M800 306 V350 H880 V388" marker-end="url(#arr7)"/>
+</g>
+</svg>
