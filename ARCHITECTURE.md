@@ -1,12 +1,12 @@
 # Arcbound — Architecture Overview
 
-A concept-level tour of how Arcbound is put together. The private repository is a monorepo containing the browser client, the authoritative game server, a deterministic simulation module shared by both, and the Python training pipeline for the game's reinforcement-learning bots.
+A concept-level tour of how Arcbound is put together. The private repository is a monorepo containing the browser client, the game server, a deterministic simulation module shared by both, and the Python training pipeline for the game's reinforcement-learning bots.
 
 ## Monorepo Layout
 
 ![Monorepo layout](assets/diagram-1-monorepo.svg)
 
-The core idea: **anything that determines gameplay outcomes lives in `shared/`** and is compiled into both bundles. The client and server literally execute the same movement and physics code, which is what makes client-side prediction exact rather than approximate.
+The core idea: **anything that determines gameplay outcomes lives in `shared/`** and is compiled into both bundles. The client and server literally execute the same movement and physics code, so a ship flown by its own client moves exactly as the server's rules say it should.
 
 ## Rooms and Game Modes
 
@@ -23,15 +23,15 @@ Each mode implements a common hooks contract: the room calls into the active mod
 Key properties, bottom-up:
 
 - **Transport** — WebRTC DataChannels configured for unordered, unreliable delivery give the browser UDP-like semantics; a WebSocket path handles signaling and serves as a fallback transport.
-- **Reliability** — ARCnet adds what the game actually needs on top: selective-ACK retransmission on reliable channels (ticked at the simulation rate), packet batching, and adaptive quality tiers. State and input travel on separate channels so neither can head-of-line-block the other.
-- **Encoding** — snapshots use a compact binary format with per-entity flag bits marking which optional fields are present, cutting bandwidth roughly 60–70% versus JSON; tile grids transfer with run-length encoding.
-- **Time** — a ping/response clock-sync exchange maps server ticks onto the client's local clock, so the interpolation buffer schedules remote-player snapshots on a precise timeline instead of inferring timing from jittery packet arrivals.
+- **Reliability** — ARCnet adds what the game actually needs on top: an ordered, acknowledged channel for match events, a latest-wins channel for snapshots with forward error correction bundled into the same send, selective-ACK retransmission, and packet batching. Inputs and fire events go as compact unreliable packets beside it, so state and input never head-of-line-block each other. The library's adaptive snapshot pacing is off in the game: a snapshot goes out every 33 Hz tick.
+- **Encoding** — snapshots use a compact binary format with per-entity flag bits marking which optional fields are present, cutting bandwidth roughly 60–70% versus JSON; tile grids transfer with run-length encoding. The format version is negotiated per connection; the current one sends projectiles by number in fixed point and long-lived bouncing shots as an id between full updates.
+- **Time** — each position report carries the time it was true on the sender's clock. The server maps that clock onto its own by the fastest recent delivery and relays each position with its age; a watching client anchors server time to its own clock the same way and draws remote ships behind an adaptive delay sized from measured lateness, instead of inferring timing from jittery packet arrivals.
 
-### Prediction and reconciliation
+### Relay authority and remote ships
 
-![Prediction and reconciliation](assets/diagram-4-prediction.svg)
+![Relay authority](assets/diagram-4-prediction.svg)
 
-Both simulations run the identical fixed-timestep code from `shared/`, with frame-time clamping on the client to avoid death spirals. Remote players take the complementary path: buffered interpolation between clock-synced snapshots.
+Both simulations run the identical fixed-timestep code from `shared/`, with frame-time clamping on the client to avoid death spirals. Each client is authoritative for its own ship, as in the classic game: it moves at once with no rewind, and it detects hits against its own true position (the victim decides; the server de-duplicates the report and applies the damage). The server keeps health, scores, rules and the bots, relays every timed position, and in the run-based modes refuses a position that would put a ship inside a wall. Remote ships are interpolated between those real positions on the sender's own timeline, with a short capped extrapolation tail.
 
 ## AI Subsystem
 

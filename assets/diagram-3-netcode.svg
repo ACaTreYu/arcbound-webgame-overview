@@ -58,7 +58,7 @@
     <rect class="node" x="90" y="86" width="300" height="58"/>
     <rect class="chip" x="366" y="94" width="14" height="14"/>
     <text class="n-title" x="104" y="112">Game loop</text>
-    <text class="n-sub" x="104" y="131">predict + render</text>
+    <text class="n-sub" x="104" y="131">own ship + render</text>
   </g>
   <g>
     <rect class="node" x="90" y="164" width="300" height="44"/>
@@ -88,7 +88,7 @@
     <rect class="node" x="630" y="86" width="300" height="58"/>
     <rect class="chip" x="906" y="94" width="14" height="14"/>
     <text class="n-title" x="644" y="112">Room simulation</text>
-    <text class="n-sub" x="644" y="131">33 Hz authoritative tick</text>
+    <text class="n-sub" x="644" y="131">33 Hz tick · rules + relay</text>
   </g>
   <g>
     <rect class="node hot" x="630" y="228" width="300" height="44"/>
